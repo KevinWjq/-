@@ -3,14 +3,19 @@ import cityinfo
 import config
 from requests import get, post
 from datetime import datetime, date
+import logging
 import os
+
+from log import log
 
 
 def get_access_token():
     # appId
-    app_id = os.environ["APP_ID"]
+    # app_id = os.environ["APP_ID"]
+    app_id = config.app_id
     # appSecret
-    app_secret = os.environ["APP_SECRET"]
+    # app_secret = os.environ["APP_SECRET"]
+    app_secret = config.app_secret
     post_url = ("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={}&secret={}"
                 .format(app_id, app_secret))
     access_token = get(post_url).json()['access_token']
@@ -58,14 +63,15 @@ def get_ciba():
     return note_ch, note_en
 
 
-def send_message(users, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en):
+def send_message(to_user, access_token, city_name, weather, max_temperature, min_temperature, note_ch, note_en):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
-    week_list = ["null", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"]
+    week_list = ["", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六","星期日"]
     year = localtime().tm_year
     month = localtime().tm_mon
     day = localtime().tm_mday
     today = datetime.date(datetime(year=year, month=month, day=day))
     week = week_list[today.isoweekday()]
+
     # 获取在一起的日子的日期格式
     love_year = int(config.love_date.split("-")[0])
     love_month = int(config.love_date.split("-")[1])
@@ -87,9 +93,10 @@ def send_message(users, access_token, city_name, weather, max_temperature, min_t
     else:
         birth_date = year_date
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
+        # "template_id": os.environ["TEMPLATE_ID"],
     data = {
-        "touser": users,
-        "template_id": os.environ["TEMPLATE_ID"],
+        "touser": to_user,
+        "template_id": config.template_id,
         "url": "http://weixin.qq.com/download",
         "topcolor": "#FF0000",
         "data": {
@@ -143,7 +150,8 @@ def send_message(users, access_token, city_name, weather, max_temperature, min_t
 # 获取accessToken
 accessToken = get_access_token()
 # 接收的用户
-users = os.environ["USER_ID"]
+# users = os.environ["USER_ID"]
+users = config.user
 # 传入省份和市获取天气信息
 province, city = config.province, config.city
 weather, max_temperature, min_temperature = get_weather(province, city)
