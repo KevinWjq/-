@@ -3,13 +3,14 @@ import cityinfo
 import config
 from requests import get, post
 from datetime import datetime, date
+import os
 
 
 def get_access_token():
     # appId
-    app_id = config.app_id
+    app_id = os.environ["APP_ID"]
     # appSecret
-    app_secret = config.app_secret
+    app_secret = os.environ["APP_SECRET"]
     post_url = ("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={}&secret={}"
                 .format(app_id, app_secret))
     access_token = get(post_url).json()['access_token']
@@ -88,7 +89,7 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
         birth_day = str(birth_date.__sub__(today)).split(" ")[0]
     data = {
         "touser": to_user,
-        "template_id": config.template_id,
+        "template_id": os.environ["TEMPLATE_ID"],
         "url": "http://weixin.qq.com/download",
         "topcolor": "#FF0000",
         "data": {
@@ -142,7 +143,7 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
 # 获取accessToken
 accessToken = get_access_token()
 # 接收的用户
-users = config.user
+users = os.environ["USER_ID"]
 # 传入省份和市获取天气信息
 province, city = config.province, config.city
 weather, max_temperature, min_temperature = get_weather(province, city)
