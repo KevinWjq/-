@@ -3,10 +3,7 @@ import cityinfo
 import config
 from requests import get, post
 from datetime import datetime, date
-import logging
 import os
-
-from log import log
 
 
 def get_access_token():
