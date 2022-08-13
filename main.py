@@ -142,11 +142,12 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
 # 获取accessToken
 accessToken = get_access_token()
 # 接收的用户
-user = config.user
+users = config.user
 # 传入省份和市获取天气信息
 province, city = config.province, config.city
 weather, max_temperature, min_temperature = get_weather(province, city)
 # 获取词霸每日金句
 note_ch, note_en = get_ciba()
 # 公众号推送消息
-send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
+for user in users:
+    send_message(user, accessToken, city, weather, max_temperature, min_temperature, note_ch, note_en)
