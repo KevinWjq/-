@@ -1,12 +1,12 @@
 # 公众号配置
 # 公众号appId
-app_id = "wx25668ea48ba88a1c"
+app_id = ""
 # 公众号appSecret
-app_secret = "a492a216816970e30b79ec0ba9fb62e4"
+app_secret = ""
 # 模板消息id
-template_id = "KdKcfu-AmxRd-zxvd8FqFrHwubCRU6gbkoDJ7zf4sog"
+template_id = ""
 # 接收公众号消息的微信号，如果有多个，需要用英文逗号间隔
-user = ["onKwE56icCNcFE2F8nopbzfZAyPc"]
+user = [""]
 
 # 信息配置
 # 所在省份
