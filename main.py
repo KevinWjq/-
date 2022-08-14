@@ -99,7 +99,7 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
         "data": {
             "date": {
                 "value": "{} {}".format(today, week),
-                "color": "#00FFFF"
+                "color": "#FFCCCC"
             },
             "city": {
                 "value": city_name,
@@ -119,7 +119,7 @@ def send_message(to_user, access_token, city_name, weather, max_temperature, min
             },
             "love_day": {
               "value": love_days,
-              "color": "#87CEEB"
+              "color": "#FF99CC"
             },
             "birthday": {
               "value": birth_day,
